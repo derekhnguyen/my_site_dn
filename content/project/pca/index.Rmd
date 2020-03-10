@@ -1,0 +1,65 @@
+---
+title: PCA Project
+author: Derek Nguyen
+date: '2020-03-10'
+slug: '.'
+categories: []
+tags: []
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-03-10T11:15:27-07:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(tidyr)
+library(janitor)
+library(ggfortify)
+```
+
+## Task 2: Principal Components Analysis
+
+
+
+```{r}
+world_env <- read_csv("world_env_vars.csv")
+```
+
+```{r, warning = FALSE, message = FALSE}
+world_env_tidy <- world_env %>% 
+  clean_names() %>% 
+  select(cropland_cover,
+         tree_canopy_cover, 
+         accessibility_to_cities, 
+         elevation, 
+         rain_mean_annual,
+         temp_mean_annual,
+         cloudiness) %>% 
+  drop_na()
+  
+```
+
+
+```{r, message = FALSE, echo = FALSE }
+world_env_pca <- prcomp(world_env_tidy, scale = TRUE)
+world_env_biplot <- autoplot(world_env_pca,
+                             colour = NA,
+                             loadings.label = TRUE,
+                             loadings.label.size = 3,
+                             loadings.label.colour = "black",
+                             loadings.label.repel = TRUE) +
+  theme_minimal() + 
+  scale_y_continuous(limits = c(-.2, .2))
+  labs(title = )
+
+world_env_biplot
+```
